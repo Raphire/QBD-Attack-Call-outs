@@ -1,0 +1,57 @@
+<html>
+  
+<head>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+  <script src="scripts/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://runeapps.org/nis/nis.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <script type="text/javascript" src="https://runeapps.org/runeappslib.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://runeapps.org/runeappslib.css">
+  <script src="https://www.unpkg.com/@alt1/base/dist/index.bundle.js"></script>
+  <script src="https://www.unpkg.com/@alt1/ocr/dist/index.bundle.js"></script>
+  <script src="https://www.unpkg.com/@alt1/chatbox/dist/index.bundle.js"></script>
+  <script src="https://www.unpkg.com/@alt1/buffs/dist/index.bundle.js"></script>
+  <script src="scripts/bosstimer.bundle.js"></script>
+</head>
+
+<body class="nis body" id="body">
+  <div class="container">
+    <!-- Update Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="resizeModal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <b>New update!</b><br/>
+            Try out the new statue indicators,<br/>
+            which can be enabled in the settings.<br/>
+            <button type="button" class="btn btn-sm btn-primary mt-2" data-dismiss="modal">Don't show again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Buttons -->
+    <div class="row">
+      <div class="col">
+        <img id="firstArtefact" src="./assets/artefact-inactive.png" title="First Artefact" class="artefactImage firstArtefact"></img>
+        <img id="secondArtefact" src="./assets/artefact-inactive.png" title="Second Artefact" class="artefactImage secondArtefact"></img>
+        <img id="thirdArtefact" src="./assets/artefact-inactive.png" title="Third Artefact" class="artefactImage thirdArtefact"></img>
+        <img id="fourthArtefact" src="./assets/artefact-inactive.png" title="Fourth Artefact" class="artefactImage fourthArtefact"></img>
+
+        <div id="settingsButton" title="Settings" type="button" class="nissmallimagebutton menubutton float-right" onclick='window.open("settings.html", "_blank", "height=325, width=400, status=yes, toolbar=no, menubar=no, location=no,addressbar=no");'></div>
+        <div id="infoButton" title="Information" type="button" class="nissmallimagebutton menubutton float-right" onclick='window.open("info.html", "_blank", "height=460, width=430, status=yes, toolbar=no, menubar=no, location=no,addressbar=no");'></div>
+        <div id="debugButton" title="Debug" type="button" class="nissmallimagebutton menubutton float-right d-none">~</div>
+      </div>
+    </div>
+
+    <!-- Incoming Attacks Textbox -->
+    <div class="row">
+      <div id="incomingBox" class="nistext font-weight-bold h5">Loading...</div>
+    </div>
+</body>
+
+<script src="scripts/script.js"></script>
+
+</html>

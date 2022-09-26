@@ -1,0 +1,138 @@
+#incomingBox{
+  margin-top:8px;
+  margin-left:7px; 
+  margin-right:7px; 
+  margin-bottom:5px;
+  height:55px; 
+  width:calc(100% - 14px); 
+  white-space:pre;
+  background:rgba(0,0,0,0.5); 
+  outline:1px solid gray; 
+  padding:5px; 
+  font-size:19px !important;
+  font-family:monospace; 
+  overflow-x:hidden; 
+  overflow-y:hidden;
+}
+
+#debugButton{
+  margin-top:8px;
+  margin-right:5px;
+}
+
+#settingsButton{
+  margin-top:8px;
+  margin-right:-9px;
+  background-image: url(../assets/settingsbutton.png);
+}
+    
+#infoButton{
+  margin-top:8px;
+  margin-right:5px;
+  background-image: url(../assets/infobutton.png);
+}
+
+.green-border {
+  border: 2px solid #008000FF !important; 
+}
+
+.red-border {
+  border: 2px solid #800000FF !important; 
+}
+
+.input-width {
+  width: 100px;
+}
+
+.body {
+  border: 2px solid #ffffff00; 
+}
+
+.row {
+    text-align: center;
+}
+
+.main {
+    overflow-y: scroll;
+    max-height: 75vh;
+    margin-top: 8px;
+}
+
+.modal-body,
+.modal-header,
+.modal-footer {
+    background-color:whitesmoke;
+    color: black;
+}
+
+.header {
+    text-align: center;
+    background: url(https://runeapps.org/nis/alt1-currentskin/nisbutton.png) 0px -100%/24px 400% repeat content-box;
+    background-color: black;
+    color: black;
+    font-family: 'trajan-pro-3';
+    padding: unset;
+    position: fixed;
+    top: 10px;
+    width: 100%;
+    z-index: 1;
+}
+
+.settings-subregion {
+  margin-left: 5px;
+  position: relative;
+  border-left: 1px solid #777;
+  border-bottom-left-radius: 6px;
+  padding-left: 2px;
+  height:30px; 
+}
+
+.settings-subregion.locked {
+  opacity: 0.5;
+  -webkit-filter: blur(1px);
+  filter: blur(1px);
+}
+
+.settings-region.locked {
+  opacity: 0.5;
+  -webkit-filter: blur(1px);
+  filter: blur(1px);
+}
+
+.main-select-width {
+  width: 135px;
+}
+
+.sub-select-width {
+  width: 124px;
+}
+
+.artefactImage {
+  margin-top:2px;
+  width:15px;
+  height:27px;
+}
+
+.artefactImage.firstArtefact {
+  position:absolute;
+  top: 0px;
+  left: 15px;
+}
+
+.artefactImage.secondArtefact {
+  position:absolute;
+  top: 0px;
+  left: 35px;
+}
+
+.artefactImage.thirdArtefact {
+  position:absolute;
+  top: 0px;
+  left: 55px;
+}
+
+.artefactImage.fourthArtefact {
+  position:absolute;
+  top: 0px;
+  left: 75px;
+}

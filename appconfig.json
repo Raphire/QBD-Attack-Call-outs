@@ -1,0 +1,16 @@
+{
+    "appName": "QBD Attack Call-outs",
+    "description": "Keeps track of the Queen Black Dragon's attacks and gives onscreen warnings.",
+    "appUrl": "./index.html",
+    "configUrl": "./appconfig.json",
+    "iconUrl": "./assets/favicon.png",
+    "defaultWidth": 283,
+    "defaultHeight": 110,
+    "minWidth":283,
+    "minHeight":110,
+    "maxWidth":283,
+    "maxHeight":110,
+    "requestHandlers": [],
+    "activators": [],
+    "permissions": "pixel,gamestate,overlay"
+}

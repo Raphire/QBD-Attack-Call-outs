@@ -1,0 +1,108 @@
+<html>
+  
+<head>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+  <script src="scripts/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://runeapps.org/nis/nis.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <script type="text/javascript" src="https://runeapps.org/runeappslib.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://runeapps.org/runeappslib.css">
+  <script src="https://www.unpkg.com/@alt1/base/dist/index.bundle.js"></script>
+  <script src="https://www.unpkg.com/@alt1/ocr/dist/index.bundle.js"></script>
+  <script src="https://www.unpkg.com/@alt1/chatbox/dist/index.bundle.js"></script>
+  <script src="https://www.unpkg.com/@alt1/buffs/dist/index.bundle.js"></script>
+  <script src="scripts/bosstimer.bundle.js"></script>
+
+  <title>Settings</title>
+</head>
+
+<body class="body" id="body">
+  <div class="container">
+    <!-- Chatbox selector -->
+    <div class="row mt-2">
+      <div class="col" title="Changes which chatwindow is read by QBD Attack Call-outs">
+        <p>Selected Chatbox</p>
+      </div>
+      <div class="col">
+        <select class="chat main-select-width">
+          <option value="" disabled>Select Chat</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tooltip selector -->
+    <div class="row">
+      <div class="col" title="Enables/disables tooltip next to cursor with attacks/hints">
+        <p>Cursor Tooltip</p>
+      </div>
+      <div class="col">
+        <select class="ttSelect main-select-width">
+          <option value="" disabled>Select Option</option>
+          <option value="0">Disabled</option>
+          <option value="1">Attack only</option>
+          <option value="2">Hint only</option>
+          <option value="3">Attack & Hint</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Antifire detection selector -->
+    <div class="row" style="margin-bottom:-10px;">
+      <div class="col" title="Enables/disables the super antifire indicator">
+        <p>Super Antifire Indicator</p>
+      </div>
+      <div class="col">
+        <select class="antifireDetection main-select-width">
+          <option value="" disabled>Select Option</option>
+          <option value="0">Disabled</option>
+          <option value="1">Enabled</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Antifire detection sound selector -->
+    <div id="qbdSoundSetting" class="row settings-subregion locked" style="margin-bottom:-5px;">
+      <div class="col" title="Changes the sound effect that is played when super antifire runs out">
+        <p>Sound Effect</p>
+      </div>
+      <div class="col">
+        <select id="qbdSoundSelect" class="qbdSound sub-select-width" disabled>
+          <option value="" disabled>Select Option</option>
+          <option value="0">Disabled</option>
+          <option value="1">Shatter 1</option>
+          <option value="2">Shatter 2</option>
+          <option value="3">Bell</option>
+          <option value="4">Spell</option>
+          <option value="5">Damage</option>
+          <option value="6">Fireball</option>
+          <option value="7">Alert</option>
+          <option value="69">Warning (the office)</option>
+        </select>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- Start delay input -->
+    <div class="row">
+      <div class="col" title="Changes the delay after the start of an encounter is detected (default: 0)">
+        <p>Start Delay (ms)</p>
+      </div>
+      <div class="col">
+        <input class="input-width" type="number" id="startDelayInput" name="startDelayInput" placeholder="0" min="0" max="2000">
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <b>Please report any issues or feedback on github: <a href="https://github.com/Raphire/QBD-Attack-Call-outs" target="_blank">https://github.com/Raphire/QBD-Attack-Call-outs</a></b>
+    </div>
+  </div>
+</body>
+
+<script src="scripts/settings.js"></script>
+
+</html>
