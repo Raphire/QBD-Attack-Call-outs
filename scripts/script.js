@@ -16,7 +16,7 @@ let attackEndCount = 0;
 let loadingCount = 2;
 
 let tooltipSetting = 1;
-let antifireSetting = 0;
+let antifireSetting = 1;
 let antifireSoundSetting = 0;
 let startOffset = 0;
 
@@ -418,12 +418,15 @@ function readBuffBar() {
       
           elid("body").classList.add("green-border");
           elid("body").classList.remove("red-border");
+          elid("antifireImage").classList.remove("d-none");
+
         }
         else if (antifireActive && !imgFound) {
           antifireActive = false;
   
           elid("body").classList.remove("green-border");
           elid("body").classList.add("red-border");
+          elid("antifireImage").classList.add("d-none");
     
           // Play sound if enabled in settings
           if (antifireSoundSetting != 0) {
@@ -516,6 +519,7 @@ function updateAntifireSetting() {
   
       elid("body").classList.remove("green-border");
       elid("body").classList.remove("red-border");
+      elid("antifireImage").classList.add("d-none");
     }
     else if (buffReadInterval === null) {
       buffReadInterval = setInterval(function () {
@@ -585,7 +589,9 @@ $('document').ready(function() {
   // Check for saved super antifire detection & set it
   if (localStorage.qbdAntifire) {
     antifireSetting = parseInt(localStorage.qbdAntifire);
+  }
 
+  if (antifireSetting != 0) {
     buffReadInterval = setInterval(function () {
       readBuffBar();
     }, 600);
@@ -599,5 +605,6 @@ $('document').ready(function() {
   // Show debug button if qbdDebug flag exists in localstorage
   if (localStorage.qbdDebug) {
     elid("debugButton").classList.remove("d-none");
+    elid("antifireImage").classList.add("debugActive");
   }
 });

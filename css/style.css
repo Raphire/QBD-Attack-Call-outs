@@ -32,6 +32,15 @@
   background-image: url(../assets/infobutton.png);
 }
 
+#antifireImage{
+  margin-top:4px;
+  position:absolute;
+  top: 0px;
+  left: 188px;
+  width:25px;
+  height:25px;
+}
+
 .green-border {
   border: 2px solid #008000FF !important; 
 }
@@ -135,4 +144,8 @@
   position:absolute;
   top: 0px;
   left: 75px;
+}
+
+.debugActive {
+  left: 163px !important;
 }

@@ -1,5 +1,5 @@
 let tooltipSetting = 1;
-let antifireSetting = 0;
+let antifireSetting = 1;
 let antifireSoundSetting = 0;
 let startOffset = 0;
 
