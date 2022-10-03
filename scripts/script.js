@@ -30,6 +30,18 @@ let attacks = {
   3: ["Extreme dragon breath", "Stand to the side"]
 }
 
+// Dictionary containing the alert sounds and their volume
+let alertSounds = {
+  1: ["./assets/shatter.mp3", 0.6],
+  2: ["./assets/shatter2.mp3", 0.45],
+  3: ["./assets/bell.mp3", 0.2],
+  4: ["./assets/spell.mp3", 0.1],
+  5: ["./assets/damage.mp3", 0.2],
+  6: ["./assets/fireball.mp3", 0.2],
+  7: ["./assets/alert.mp3", 0.2],
+  69: ["./assets/warningend.mp3", 0.5]
+}
+
 let alertSound = new Audio("./assets/shatter.mp3");
 
 // Set Chat reader with all textcolors etc.
@@ -520,48 +532,15 @@ function updateAlertSound(playSound=false) {
   if (localStorage.qbdAntifireSound) {
     antifireSoundSetting = parseInt(localStorage.qbdAntifireSound);
 
-    switch(antifireSoundSetting) {
-      case 1:
-        alertSound = new Audio("./assets/shatter.mp3");
-        alertSound.volume = 0.6;
-        break;
-      case 2:
-        alertSound = new Audio("./assets/shatter2.mp3");
-        alertSound.volume = 0.45;
-        break;
-      case 3:
-        alertSound = new Audio("./assets/bell.mp3");
-        alertSound.volume = 0.2;
-        break;
-      case 4:
-        alertSound = new Audio("./assets/spell.mp3");
-        alertSound.volume = 0.1;
-        break;
-      case 5:
-        alertSound = new Audio("./assets/damage.mp3");
-        alertSound.volume = 0.2;
-        break;
-      case 6:
-        alertSound = new Audio("./assets/fireball.mp3");
-        alertSound.volume = 0.2;
-        break;
-      case 7:
-        alertSound = new Audio("./assets/alert.mp3");
-        alertSound.volume = 0.2;
-        break;
-      case 69:
-        alertSound = new Audio("./assets/warningend.mp3");
-        alertSound.volume = 0.5;
-        break;
-      case 0:
-        break;
-      default:
-        console.log("Error: Invalid Super antifire detection sound setting!");
-        break;
+    if (antifireSoundSetting != 0) {
+      alertSound = new Audio(alertSounds[antifireSoundSetting][0]);
+      alertSound.volume = alertSounds[antifireSoundSetting][1];
     }
   
-    if (playSound && antifireSoundSetting != 0) {
-      alertSound.play();
+    if (playSound) {
+      if (antifireSoundSetting != 0) {
+        alertSound.play();
+      }
 
       console.log("Super antifire detection sound setting changed to: " + antifireSoundSetting);
     }
