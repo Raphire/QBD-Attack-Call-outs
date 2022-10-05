@@ -36,9 +36,13 @@
   margin-top:4px;
   position:absolute;
   top: 0px;
-  left: 188px;
+  left: 184px;
   width:25px;
   height:25px;
+}
+
+#antifireImage.debugActive {
+  left: 160px !important;
 }
 
 .green-border {
@@ -159,8 +163,4 @@
   position:absolute;
   top: 0px;
   left: 75px;
-}
-
-.debugActive {
-  left: 163px !important;
 }
