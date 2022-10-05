@@ -51,7 +51,7 @@
     <!-- Antifire detection selector -->
     <div class="row" style="margin-bottom:-10px;">
       <div class="col" title="Enables/disables the super antifire indicator">
-        <p>Super Antifire Indicator</p>
+        <p>Antifire Indicator</p>
       </div>
       <div class="col">
         <select class="antifireDetection main-select-width">
@@ -62,8 +62,26 @@
       </div>
     </div>
 
+    <!-- Antifire border selector -->
+    <div id="antifireBorderSetting" class="row settings-subregion">
+      <div class="col" title="Changes the border around the app to show super antifire status">
+        <p>Border Color</p>
+      </div>
+      <div class="col">
+        <select id="antifireBorderSelect" class="antifireBorder sub-select-width">
+          <option value="" disabled>Select Option</option>
+          <option value="0">Disabled</option>
+          <option value="1">Green/Red</option>
+          <option value="2">Blue/Red</option>
+          <option value="3">Blue/Yellow</option>
+          <option value="4">Blue/White</option>
+          <option value="5">White/Red</option>
+        </select>
+      </div>
+    </div>
+
     <!-- Antifire detection sound selector -->
-    <div id="qbdSoundSetting" class="row settings-subregion" style="margin-bottom:-5px;">
+    <div id="qbdSoundSetting" class="row settings-subregion bottom-subsetting" style="margin-bottom:-5px;">
       <div class="col" title="Changes the sound effect that is played when super antifire runs out">
         <p>Sound Effect</p>
       </div>

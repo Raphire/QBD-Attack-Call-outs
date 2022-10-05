@@ -1,5 +1,6 @@
 let tooltipSetting = 1;
 let antifireSetting = 1;
+let antifireBorderSetting = 1;
 let antifireSoundSetting = 0;
 let startOffset = 0;
 
@@ -7,10 +8,14 @@ function toggleSoundEffectSetting() {
   if (antifireSetting == 1) {
     elid("qbdSoundSetting").classList.remove("locked");
     elid("qbdSoundSelect").disabled = false;
+    elid("antifireBorderSetting").classList.remove("locked");
+    elid("antifireBorderSelect").disabled = false;
   }
   else {
     elid("qbdSoundSetting").classList.add("locked");
     elid("qbdSoundSelect").disabled = true;
+    elid("antifireBorderSetting").classList.add("locked");
+    elid("antifireBorderSelect").disabled = true;
   }
 }
 
@@ -34,6 +39,12 @@ $('document').ready(function() {
     toggleSoundEffectSetting();
 
     window.opener.updateAntifireSetting();
+  });
+
+  $(".antifireBorder").change(function () {
+    localStorage.setItem("qbdAntifireBorder", $(this).val());
+
+    window.opener.updateAntifireBorder(true);
   });
 
   $(".qbdSound").change(function () {
@@ -75,6 +86,13 @@ $('document').ready(function() {
   }
 
   $(".antifireDetection").val(antifireSetting);
+
+  // Check for saved super antifire border effect & set it
+  if (localStorage.qbdAntifireBorder) {
+    antifireBorderSetting = parseInt(localStorage.qbdAntifireBorder);
+  }
+
+  $("#antifireBorderSelect").val(antifireBorderSetting);
 
   // Check for saved super antifire sound effect & set it
   if (localStorage.qbdAntifireSound) {

@@ -17,6 +17,7 @@ let loadingCount = 2;
 
 let tooltipSetting = 1;
 let antifireSetting = 1;
+let antifireBorderSetting = 1;
 let antifireSoundSetting = 0;
 let startOffset = 0;
 
@@ -40,6 +41,15 @@ let alertSounds = {
   6: ["./assets/fireball.mp3", 0.2],
   7: ["./assets/alert.mp3", 0.2],
   69: ["./assets/warningend.mp3", 0.5]
+}
+
+// Dictionary containing border colors for settings
+let borderColors = {
+  1: ["green-border", "red-border"],
+  2: ["blue-border", "red-border"],
+  3: ["blue-border", "yellow-border"],
+  4: ["blue-border", "white-border"],
+  5: ["white-border", "red-border"]
 }
 
 let alertSound = new Audio("./assets/shatter.mp3");
@@ -416,16 +426,21 @@ function readBuffBar() {
         if (imgFound && !antifireActive) {
           antifireActive = true;
       
-          elid("body").classList.add("green-border");
-          elid("body").classList.remove("red-border");
+          if (antifireBorderSetting != 0) {
+            elid("body").classList.add(borderColors[antifireBorderSetting][0]);
+            elid("body").classList.remove(borderColors[antifireBorderSetting][1]);
+          }
+
           elid("antifireImage").classList.remove("d-none");
 
         }
         else if (antifireActive && !imgFound) {
           antifireActive = false;
   
-          elid("body").classList.remove("green-border");
-          elid("body").classList.add("red-border");
+          if (antifireBorderSetting != 0) {
+            elid("body").classList.remove(borderColors[antifireBorderSetting][0]);
+            elid("body").classList.add(borderColors[antifireBorderSetting][1]);
+          }
           elid("antifireImage").classList.add("d-none");
     
           // Play sound if enabled in settings
@@ -519,6 +534,9 @@ function updateAntifireSetting() {
   
       elid("body").classList.remove("green-border");
       elid("body").classList.remove("red-border");
+      elid("body").classList.remove("blue-border");
+      elid("body").classList.remove("yellow-border");
+      elid("body").classList.remove("white-border");
       elid("antifireImage").classList.add("d-none");
     }
     else if (buffReadInterval === null) {
@@ -528,6 +546,25 @@ function updateAntifireSetting() {
     }
 
     console.log("Super antifire detection setting changed to: " + antifireSetting);
+  }
+}
+
+// Update the antifire border setting with new value from localstorage
+function updateAntifireBorder() {
+  if (localStorage.qbdAntifireBorder) {
+    antifireBorderSetting = parseInt(localStorage.qbdAntifireBorder);
+    
+    elid("body").classList.remove("green-border");
+    elid("body").classList.remove("red-border");
+    elid("body").classList.remove("blue-border");
+    elid("body").classList.remove("yellow-border");
+    elid("body").classList.remove("white-border");
+
+    if (antifireActive) {
+      antifireActive = false;
+    }
+    
+    console.log("Super antifire border setting changed to: " + antifireBorderSetting);
   }
 }
 
@@ -595,6 +632,11 @@ $('document').ready(function() {
     buffReadInterval = setInterval(function () {
       readBuffBar();
     }, 600);
+  }
+
+  // Check for saved antifire border setting & update
+  if (localStorage.qbdAntifireBorder) {
+    antifireBorderSetting = parseInt(localStorage.qbdAntifireBorder);
   }
 
   // Check for saved super antifire sound setting & update
