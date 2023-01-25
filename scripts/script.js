@@ -12,6 +12,7 @@ let currentTooltip = "";
 let bossPhase = 1;
 let firstPhaseupdate = true;
 let intervalCount = 0;
+let chatEndDetected = false;
 let attackEndCount = 0;
 let loadingCount = 2;
 
@@ -113,7 +114,7 @@ let findChat = setInterval(function () {
     }
     catch(e) {
       if (e.message == "capturehold failed") {
-        message("Error: Cannot find RS client\nRestart Alt1");
+        message("Error: Can't find RS\nclient; Restart Alt1");
       }
       else if (e.message.includes("No permission")) {
         message("Error: No permission\nInstall app first");
@@ -309,8 +310,11 @@ function readChatbox() {
 
       // Check for lines indicating the end of the fight
       else if (lines[idx].text.includes("The enchantment is restored! The Queen Black Dragon falls")) {
-        $("#fourthArtefact").attr("src", "assets/artefact-done.png");
+        chatEndDetected = true;
+        
         updateTooltip();
+        
+        $("#fourthArtefact").attr("src", "assets/artefact-done.png");
       }
     }
     else {
@@ -332,7 +336,12 @@ function readBossTimer() {
     }
   }
   else if (!isPaused && bossTimerReader.find() == null && debugMode == false) {
-    if (attackEndCount >= 4) {
+    // End encounter if an end of fight chatline has been detected & bosstimer has not been detected for at least 3 ticks
+    if (chatEndDetected && attackEndCount >= 4) {
+      stopEncounter();
+    }
+    // In case a chatline was missed end encounter after a set amount of time (10 ticks by default)
+    else if (attackEndCount >= 10) {
       stopEncounter();
     }
 
@@ -471,6 +480,7 @@ function startEncounter(offset = 0) {
 function stopEncounter() {
   isPaused = true;
   firstPhaseupdate = false;
+  chatEndDetected = false;
   currentTooltip = "";
   bossPhase = 1;
   attackEndCount = 0;
