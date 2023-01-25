@@ -98,17 +98,34 @@ let buffReadInterval = null;
 // Chat finder & parser functions adapted from: https://github.com/ZeroGwafa/SerenTracker
 let findChat = setInterval(function () {
   if (chatReader.pos === null) {
-    var dots = ".";
+    try {
+      var dots = ".";
     
-    for (var y = 0; y < loadingCount % 3; y++) {
-      dots += ".";
+      for (var y = 0; y < loadingCount % 3; y++) {
+        dots += ".";
+      }
+  
+      loadingCount++;
+  
+      message("Looking for chatbox" + dots);
+      
+      chatReader.find();
     }
-
-    loadingCount++;
-
-    message("Looking for chatbox" + dots);
-    
-    chatReader.find();
+    catch(e) {
+      if (e.message == "capturehold failed") {
+        message("Error: Cannot find RS client\nRestart Alt1");
+      }
+      else if (e.message.includes("No permission")) {
+        message("Error: No permission\nInstall app first");
+      }
+      else if (e.message == "alt1 is not defined") {
+        message("Error: Alt1 is not found\nOpen app in Alt1");
+      }
+      else {
+        message("Unknown Error\nCheck console for info");
+        console.log("Error: " + e.message);
+      }
+    }
   }
   else {
     console.log("Chatbox found!");
@@ -126,6 +143,15 @@ let findChat = setInterval(function () {
     }
     
     showSelectedChat(chatReader.pos);
+
+    // Start interval for antifire detection if enabled
+    if (antifireSetting != 0) {
+      buffReadInterval = setInterval(function () {
+        readBuffBar();
+      }, 600);
+    }
+
+    // Start interval for reading chatbox/bosstimer
     setInterval(function () {
       if (intervalCount % 2) {
         readBossTimer();
@@ -578,12 +604,6 @@ $('document').ready(function() {
   // Check for saved super antifire detection & set it
   if (localStorage.qbdAntifire) {
     antifireSetting = parseInt(localStorage.qbdAntifire);
-  }
-
-  if (antifireSetting != 0) {
-    buffReadInterval = setInterval(function () {
-      readBuffBar();
-    }, 600);
   }
 
   // Check for saved antifire border setting & update
