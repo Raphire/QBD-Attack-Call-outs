@@ -26,7 +26,7 @@
         <p>Selected Chatbox</p>
       </div>
       <div class="col">
-        <select class="chat main-select-width">
+        <select class="chat main-select-width" title="Changes which chatwindow is read by QBD Attack Call-outs">
           <option value="" disabled>Select Chat</option>
         </select>
       </div>
@@ -34,11 +34,11 @@
 
     <!-- Tooltip selector -->
     <div class="row">
-      <div class="col" title="Enables/disables tooltip next to cursor with attacks/hints">
+      <div class="col" title="Enables/disables a tooltip that displays info about incoming attacks next to your cursor">
         <p>Cursor Tooltip</p>
       </div>
       <div class="col">
-        <select class="ttSelect main-select-width">
+        <select class="ttSelect main-select-width" title="Enables/disables a tooltip that displays info about incoming attacks next to your cursor">
           <option value="" disabled>Select Option</option>
           <option value="0">Disabled</option>
           <option value="1">Attack only</option>
@@ -54,7 +54,7 @@
         <p>Antifire Indicator</p>
       </div>
       <div class="col">
-        <select class="antifireDetection main-select-width">
+        <select class="antifireDetection main-select-width" title="Enables/disables the super antifire indicator">
           <option value="" disabled>Select Option</option>
           <option value="0">Disabled</option>
           <option value="1">Enabled</option>
@@ -68,7 +68,7 @@
         <p>Border Color</p>
       </div>
       <div class="col">
-        <select id="antifireBorderSelect" class="antifireBorder sub-select-width">
+        <select id="antifireBorderSelect" class="antifireBorder sub-select-width" title="Changes the border around the app to show super antifire status">
           <option value="" disabled>Select Option</option>
           <option value="0">Disabled</option>
           <option value="1">Green/Red</option>
@@ -86,7 +86,7 @@
         <p>Sound Effect</p>
       </div>
       <div class="col">
-        <select id="qbdSoundSelect" class="qbdSound sub-select-width">
+        <select id="qbdSoundSelect" class="qbdSound sub-select-width" title="Changes the sound effect that is played when super antifire runs out">
           <option value="" disabled>Select Option</option>
           <option value="0">Disabled</option>
           <option value="1">Shatter 1</option>
@@ -105,11 +105,11 @@
 
     <!-- Start delay input -->
     <div class="row" style="margin-bottom:-10px;">
-      <div class="col" title="Changes the delay after the start of an encounter is detected (default: 0)">
+      <div class="col" title="The delay after the start of an encounter is detected (default: 0)">
         <p>Start Delay (ms)</p>
       </div>
       <div class="col">
-        <input class="input-width" type="number" id="startDelayInput" name="startDelayInput" placeholder="0" min="0" max="2000">
+        <input class="input-width" type="number" id="startDelayInput" name="startDelayInput" placeholder="0" min="0" max="2000" title="The delay after the start of an encounter is detected (default: 0)">
       </div>
     </div>
 
