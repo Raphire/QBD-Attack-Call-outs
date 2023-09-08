@@ -14,9 +14,12 @@ let firstPhaseupdate = true;
 let intervalCount = 0;
 let chatEndDetected = false;
 let attackEndCount = 0;
+let buffInactiveCount = 0;
 let loadingCount = 2;
 
 let tooltipSetting = 1;
+let attackSoundSetting = 11;
+let artifactSoundSetting = 9;
 let antifireSetting = 1;
 let antifireBorderSetting = 1;
 let antifireSoundSetting = 0;
@@ -34,13 +37,19 @@ let attacks = {
 
 // Dictionary containing the alert sounds and their volume
 let alertSounds = {
-  1: ["./assets/shatter.mp3", 0.6],
-  2: ["./assets/shatter2.mp3", 0.45],
-  3: ["./assets/bell.mp3", 0.2],
-  4: ["./assets/spell.mp3", 0.1],
-  5: ["./assets/damage.mp3", 0.2],
-  6: ["./assets/fireball.mp3", 0.2],
-  7: ["./assets/alert.mp3", 0.2],
+  1: ["./assets/shatter.mp3", 0.5],
+  2: ["./assets/shatter2.mp3", 0.4],
+  3: ["./assets/bell.mp3", 0.1],
+  4: ["./assets/spell.mp3", 0.05],
+  5: ["./assets/damage.mp3", 0.1],
+  6: ["./assets/fireball.mp3", 0.1],
+  7: ["./assets/alert.mp3", 0.1],
+  8: ["./assets/beep.mp3", 0.7],
+  9: ["./assets/beeps.mp3", 0.7],
+  10: ["./assets/softbeep.mp3", 0.7],
+  11: ["./assets/softendbeep.mp3", 0.7],
+  12: ["./assets/xylo.mp3", 0.3],
+  13: ["./assets/xyloend.mp3", 0.25],
   69: ["./assets/warningend.mp3", 0.5]
 }
 
@@ -54,6 +63,8 @@ let borderColors = {
 }
 
 let alertSound = new Audio("./assets/shatter.mp3");
+let attackSound = new Audio("./assets/softendbeep.mp3");
+let artifactSound = new Audio("./assets/beeps.mp3");
 
 // Set Chat reader with all textcolors etc.
 let chatReader = new Chatbox.default();
@@ -215,6 +226,10 @@ function readChatbox() {
         message("Incoming Attack: \nFire Wall");
         lastUIUpdate = Date.now();
 
+        if (attackSoundSetting != 0) {
+          attackSound.play();
+        }
+
         updateUI(1);
       }
       
@@ -224,6 +239,10 @@ function readChatbox() {
         message("Incoming Attack: \nTortured Souls");
         lastUIUpdate = Date.now();
 
+        if (attackSoundSetting != 0) {
+          attackSound.play();
+        }
+
         updateUI(2);
       }
 
@@ -232,12 +251,16 @@ function readChatbox() {
         message("Incoming Attack: \nExtreme Dragon Breath");
         lastUIUpdate = Date.now();
 
+        if (attackSoundSetting != 0) {
+          attackSound.play();
+        }
+
         updateUI(3);
       }
 
       // Check for lines indicating crystal form 
       else if ((lines[idx].text.includes("Queen Black Dragon takes on the consistency of crystal"))) {
-        message("Incoming Attack: \nWeak To Ranged");
+        message("The QBD is now: \nWeak To Ranged");
         lastUIUpdate = Date.now();
 
         updateUI();
@@ -245,7 +268,7 @@ function readChatbox() {
 
       // Check for lines indicating carapace form
       else if ((lines[idx].text.includes("Queen Black Dragon hardens her carapace"))) {
-        message("Incoming Attack: \nWeak To Magic");
+        message("The QBD is now: \nWeak To Magic");
         lastUIUpdate = Date.now();
 
         updateUI();
@@ -256,6 +279,10 @@ function readChatbox() {
         if ((lines[idx].text.includes("the first") && bossPhase == 1)) {
           bossPhase = 2;
           firstPhaseupdate = true;
+
+          if (artifactSoundSetting != 0) {
+            artifactSound.play();
+          }
 
           message("Activate the \nfirst artefact!");
           
@@ -268,6 +295,10 @@ function readChatbox() {
         else if ((lines[idx].text.includes("the second")) && bossPhase == 2) {
           bossPhase = 3;
           firstPhaseupdate = true;
+
+          if (artifactSoundSetting != 0) {
+            artifactSound.play();
+          }
 
           message("Activate the \nsecond artefact!");
           
@@ -282,6 +313,10 @@ function readChatbox() {
           bossPhase = 4;
           firstPhaseupdate = true;
           
+          if (artifactSoundSetting != 0) {
+            artifactSound.play();
+          }
+
           message("Activate the \nthird artefact!");
 
           if(tooltipSetting != 0) {
@@ -293,6 +328,10 @@ function readChatbox() {
           $("#thirdArtefact").attr("src", "assets/artefact-active.png");
         }
         else if ((lines[idx].text.includes("the last"))  && bossPhase == 4) {
+          if (artifactSoundSetting != 0) {
+            artifactSound.play();
+          }
+          
           message("Activate the \nlast artefact!");
 
           if(tooltipSetting != 0) {
@@ -365,6 +404,8 @@ function updateUI(attackType = 0) {
     firstPhaseupdate = false;
 
     switch (bossPhase) {
+      case 1:
+        break;
       case 2:
         $("#firstArtefact").attr("src", "assets/artefact-done.png");
         $("#secondArtefact").attr("src", "assets/artefact.png");
@@ -414,7 +455,7 @@ function readBuffBar() {
     else {
       let buffReadout = buffReader.read();
       const image = new Image;
-      image.src = "./assets/SuperAntifire.png";
+      image.src = "./assets/antifire_new.png";
       image.onload = () => {
         let imgFound = false;
 
@@ -424,39 +465,47 @@ function readBuffBar() {
         // Iterate through all buffs to find a buff matching the imgSrc
         for (var buffObj in buffReadout) {
           let countMatch = buffReadout[buffObj].countMatch(imageData,false).passed;
-          
-          if (countMatch >= 70) {
+
+          if (countMatch >= 150) {
             imgFound = true;
           }
         }
 
         // Add border if buff is found
-        if (imgFound && !antifireActive) {
-          antifireActive = true;
+        if (imgFound) {
+          buffInactiveCount = 0;
+
+          if (!antifireActive) {
+            antifireActive = true;
       
-          if (antifireBorderSetting != 0) {
-            elid("body").classList.add(borderColors[antifireBorderSetting][0]);
-            elid("body").classList.remove(borderColors[antifireBorderSetting][1]);
+            if (antifireBorderSetting != 0) {
+              elid("body").classList.add(borderColors[antifireBorderSetting][0]);
+              elid("body").classList.remove(borderColors[antifireBorderSetting][1]);
+            }
+  
+            elid("antifireImage").classList.remove("d-none");
           }
-
-          elid("antifireImage").classList.remove("d-none");
-
         }
         else if (antifireActive && !imgFound) {
-          antifireActive = false;
-  
-          if (antifireBorderSetting != 0) {
-            elid("body").classList.remove(borderColors[antifireBorderSetting][0]);
-            elid("body").classList.add(borderColors[antifireBorderSetting][1]);
-          }
-          elid("antifireImage").classList.add("d-none");
-    
-          // Play sound if enabled in settings
-          if (antifireSoundSetting != 0) {
-            alertSound.play();
+          buffInactiveCount = buffInactiveCount + 1;
 
-            // To do: Add text overlay as an option
-            //alt1.overLayTextEx("Super antifire has run out!", A1lib.mixColor(0, 255, 0), 25,parseInt(alt1.rsWidth/2),parseInt((alt1.rsHeight/2)-300),3000,"monospace",true,true);
+          if(buffInactiveCount >= 8) {
+            antifireActive = false;
+            buffInactiveCount = 0;
+  
+            if (antifireBorderSetting != 0) {
+              elid("body").classList.remove(borderColors[antifireBorderSetting][0]);
+              elid("body").classList.add(borderColors[antifireBorderSetting][1]);
+            }
+            elid("antifireImage").classList.add("d-none");
+      
+            // Play sound if enabled in settings
+            if (antifireSoundSetting != 0) {
+              alertSound.play();
+  
+              // To do: Add text overlay as an option
+              //alt1.overLayTextEx("Super antifire has run out!", A1lib.mixColor(0, 255, 0), 25,parseInt(alt1.rsWidth/2),parseInt((alt1.rsHeight/2)-300),3000,"monospace",true,true);
+            }
           }
         }
       }
@@ -524,6 +573,46 @@ function updateTooltipSetting() {
   }
 }
 
+// Update the attack sound setting with new value from localstorage
+function updateAttackSound(playSound=false) {
+  if (localStorage.qbdAttackSound) {
+    attackSoundSetting = parseInt(localStorage.qbdAttackSound);
+
+    if (attackSoundSetting != 0) {
+      attackSound = new Audio(alertSounds[attackSoundSetting][0]);
+      attackSound.volume = alertSounds[attackSoundSetting][1];
+    }
+  
+    if (playSound) {
+      if (attackSoundSetting != 0) {
+        attackSound.play();
+      }
+
+      console.log("Attack sound setting changed to: " + attackSoundSetting);
+    }
+  }
+}
+
+// Update the artifact sound setting with new value from localstorage
+function updateArtifactSound(playSound=false) {
+  if (localStorage.qbdArtifactSound) {
+    artifactSoundSetting = parseInt(localStorage.qbdArtifactSound);
+
+    if (artifactSoundSetting != 0) {
+      artifactSound = new Audio(alertSounds[artifactSoundSetting][0]);
+      artifactSound.volume = alertSounds[artifactSoundSetting][1];
+    }
+  
+    if (playSound) {
+      if (artifactSoundSetting != 0) {
+        artifactSound.play();
+      }
+
+      console.log("Artifact sound setting changed to: " + artifactSoundSetting);
+    }
+  }
+}
+
 // Update the Super antifire detection setting with new value from localstorage
 function updateAntifireSetting() {
   if (localStorage.qbdAntifire) {
@@ -534,6 +623,7 @@ function updateAntifireSetting() {
       clearInterval(buffReadInterval);
       buffReadInterval = null;
       antifireActive = false;
+      buffInactiveCount = 0;
     }
     else if (buffReadInterval === null) {
       buffReadInterval = setInterval(function () {
@@ -611,6 +701,22 @@ $('document').ready(function() {
     tooltipSetting = parseInt(localStorage.qbdTT);
   }
 
+  // Check for saved attackSoundSetting & set it
+  if (localStorage.qbdAttackSound) {
+    updateAttackSound();
+  }
+  else {
+    attackSound.volume = alertSounds[attackSoundSetting][1];
+  }
+
+  // Check for saved artifactSoundSetting & set it
+  if (localStorage.qbdArtifactSound) {
+    updateArtifactSound();
+  }
+  else {
+    artifactSound.volume = alertSounds[artifactSoundSetting][1];
+  }
+
   // Check for saved super antifire detection & set it
   if (localStorage.qbdAntifire) {
     antifireSetting = parseInt(localStorage.qbdAntifire);
@@ -624,6 +730,9 @@ $('document').ready(function() {
   // Check for saved super antifire sound setting & update
   if (localStorage.qbdAntifireSound) {
     updateAlertSound();
+  }
+  else {
+    alertSound.volume = alertSounds[antifireSoundSetting][1];
   }
 
   // Show debug button if qbdDebug flag exists in localstorage

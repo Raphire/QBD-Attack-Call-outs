@@ -1,4 +1,6 @@
 let tooltipSetting = 1;
+let attackSoundSetting = 11;
+let artifactSoundSetting = 9;
 let antifireSetting = 1;
 let antifireBorderSetting = 1;
 let antifireSoundSetting = 0;
@@ -30,6 +32,18 @@ $('document').ready(function() {
     localStorage.setItem("qbdTT", parseInt($(this).val()));
 
     window.opener.updateTooltipSetting();
+  });
+
+  $(".qbdAttackSound").change(function () {
+    localStorage.setItem("qbdAttackSound", $(this).val());
+
+    window.opener.updateAttackSound(true);
+  });
+
+  $(".qbdArtifactSound").change(function () {
+    localStorage.setItem("qbdArtifactSound", $(this).val());
+
+    window.opener.updateArtifactSound(true);
   });
 
   $(".antifireDetection").change(function () {
@@ -78,6 +92,20 @@ $('document').ready(function() {
   }
   
   $(".ttSelect").val(tooltipSetting);
+
+  // Check for saved attack sound effect & set it
+  if (localStorage.qbdAttackSound) {
+    attackSoundSetting = parseInt(localStorage.qbdAttackSound);
+  }
+
+  $("#qbdAttackSoundSelect").val(attackSoundSetting);
+
+    // Check for saved attack sound effect & set it
+    if (localStorage.qbdArtifactSound) {
+      artifactSoundSetting = parseInt(localStorage.qbdArtifactSound);
+    }
+  
+    $("#qbdArtifactSoundSelect").val(artifactSoundSetting);
 
   // Check for saved super antifire detection & set it
   if (localStorage.qbdAntifire) {
